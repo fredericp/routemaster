@@ -99,6 +99,7 @@ class RouteMap {
 ///
 /// For example: `Routemaster.of(context).push('/path')`
 class Routemaster {
+  static final navigatorKey = GlobalKey<NavigatorState>();
   // The current router delegate. This can change if the delegate is recreated.
   late RoutemasterDelegate _delegate;
 
@@ -989,6 +990,7 @@ class _RouteRequest {
 class PageStackNavigator extends StatefulWidget {
   /// The stack of pages to show in the [Navigator].
   final PageStack stack;
+  final GlobalKey<NavigatorState>? globalKey;
 
   /// A delegate that decides how pages are animated when they're added or
   /// removed from the [Navigator].
@@ -1000,6 +1002,7 @@ class PageStackNavigator extends StatefulWidget {
   /// Provides a [Navigator] that shows pages from a [PageStack].
   const PageStackNavigator({
     Key? key,
+    this.globalKey,
     required this.stack,
     this.transitionDelegate = const DefaultTransitionDelegate<dynamic>(),
     this.observers = const [],
@@ -1076,6 +1079,7 @@ class PageStackNavigatorState extends State<PageStackNavigator> {
 
   void _updateNavigator() {
     _widget = _StackNavigator(
+      key: widget.globalKey,
       stack: widget.stack,
       onPopPage: (route, dynamic result) {
         final didPop = widget.stack.onPopPage(route, result);
