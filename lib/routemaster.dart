@@ -414,7 +414,7 @@ class RoutemasterDelegate extends RouterDelegate<RouteData>
         }
       }
 
-      if (kIsWeb && isReplacement) {
+      if (kIsWeb && isReplacement && !_isBuilding) {
         // Update without the router changing the URL or adding a history entry
         Router.neglect(_context, _update); // coverage:ignore-line
 
